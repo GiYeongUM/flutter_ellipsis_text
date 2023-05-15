@@ -2,7 +2,7 @@ name: flutter_ellipsis_text
 description: Flutter ellipsis text that makes all lines of text visible by clicking when they cannot be shown.
 homepage: https://github.com/GiYeongUM
 repository: https://github.com/GiYeongUM/flutter_ellipsis_text
-version: 1.0.0
+version: 1.0.1
 
 environment:
   sdk: ">=2.17.3 <3.0.0"

@@ -1,3 +1,5 @@
+library flutter_ellipsis_text;
+
 import 'package:flutter/material.dart';
 
 class EllipsisText extends StatefulWidget {
