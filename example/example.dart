@@ -1,49 +1,57 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ellipsis_text/flutter_ellipsis_text.dart';
 
-void main() {
-  runApp(const ExampleApp());
-}
+void main() => runApp(const ExampleApp());
 
 class ExampleApp extends StatelessWidget {
   const ExampleApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Example',
-      theme: ThemeData(primarySwatch: Colors.blue),
-      home: const ExamplePage(),
-    );
-  }
+  Widget build(BuildContext context) => MaterialApp(
+    title: 'Expandable text',
+    theme: ThemeData(
+      colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
+    ),
+    darkTheme: ThemeData(
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: Colors.indigo,
+        brightness: Brightness.dark,
+      ),
+    ),
+    home: const ExamplePage(),
+  );
 }
 
-class ExamplePage extends StatelessWidget {
+class ExamplePage extends StatefulWidget {
   const ExamplePage({super.key});
-
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Example')),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: const <Widget>[
-              EllipsisText(
-                text:
-                    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. "
-                    "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, "
-                    "when an unknown printer took a galley of type and scrambled it to make a type specimen book. "
-                    "It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
-                ellipsis: "..show more",
-                maxLines: 2,
-              ),
-            ],
-          ),
+  State<ExamplePage> createState() => _ExamplePageState();
+}
+
+class _ExamplePageState extends State<ExamplePage> {
+  @override
+  Widget build(BuildContext context) => Scaffold(
+    appBar: AppBar(title: const Text('Expandable text')),
+    body: ListView(
+      padding: const EdgeInsets.all(24),
+      children: [
+        const EllipsisText(
+          text:
+              'Flutter packages should follow your app’s typography, color scheme, '
+              'layout constraints, and accessibility preferences. Tap this paragraph '
+              'to read the complete description, and tap again to collapse it.',
+          ellipsis: '… more',
+          maxLines: 2,
         ),
-      ),
-    );
-  }
+        const SizedBox(height: 24),
+        const EllipsisText(
+          text:
+              'هذا مثال لنص يدعم اتجاه الكتابة من اليمين إلى اليسار ويعرض المزيد عند الضغط عليه.',
+          ellipsis: '…',
+          textDirection: TextDirection.rtl,
+          maxLines: 1,
+        ),
+      ],
+    ),
+  );
 }
