@@ -1,29 +1,60 @@
 # flutter_ellipsis_text
 
-ellipsis text is a widget that allows you to **customize text in ellipsis** when text exceeds maxLines.
+Expandable Flutter text with a custom ellipsis. Layout follows parent constraints,
+text scaling, and ambient text direction.
 
-[![Flutter](https://img.shields.io/badge/Platform-Flutter-blue.svg)](https://flutter.dev/)
+## Installation
 
+Requires Flutter 3.32+ and Dart 3.8+.
 
-## ⚡ [Installation](https://flutter.dev/docs/development/packages-and-plugins/using-packages)
-
-```yaml
-dependencies:
-  flutter_icon_snackbar: ^<latest_version>
+```sh
+flutter pub add flutter_ellipsis_text
 ```
 
-## 💪 Usage
+## Usage
 
-<img width="308" alt="" src="https://github.com/GiYeongUM/flutter_ellipsis_text/raw/main/images/ellipsis_text.gif">
+```dart
+import 'package:flutter/material.dart';
+import 'package:flutter_ellipsis_text/flutter_ellipsis_text.dart';
 
-``` dart
-EllipsisText(
-    text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. "
-        "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, "
-        "when an unknown printer took a galley of type and scrambled it to make a type specimen book. "
-        "It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
-    ellipsis: "..show more",
-    maxLines: 2,
-    style: TextStyle(), // add if you want
+const EllipsisText(
+  text: 'A long description that can be expanded by tapping it.',
+  ellipsis: '… more',
+  maxLines: 2,
+  style: TextStyle(fontSize: 16),
 )
 ```
+
+Place the widget below a Material widget (for example, in a Scaffold).
+Give it a bounded width with a SizedBox or Expanded when you want wrapping.
+
+- Tap overflowing text to expand or collapse.
+- Set `isShowMore: false` to display noninteractive, truncated text.
+- Set `startScaleIsSmall: false` to start expanded.
+- Set `textDirection` to override the ambient direction.
+- `minWidth` and `maxWidth` are preferred constraints; tighter parent constraints win.
+
+The full text remains available to screen readers when collapsed.
+
+![Expand and collapse example](https://github.com/GiYeongUM/flutter_ellipsis_text/raw/main/images/ellipsis_text.gif)
+
+## Development
+
+```sh
+flutter pub get
+dart format --output=none --set-exit-if-changed lib example test
+flutter analyze --fatal-infos
+flutter test
+flutter pub publish --dry-run
+```
+
+CI checks the minimum supported Flutter version and the latest stable channel.
+
+## Migration
+
+This release requires Dart 3.8 and Flutter 3.32 or newer. Existing constructor
+and method arguments remain supported. See [CHANGELOG.md](CHANGELOG.md) for fixes.
+
+## License
+
+MIT. See [LICENSE](LICENSE).
