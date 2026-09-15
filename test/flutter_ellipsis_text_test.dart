@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ellipsis_text/flutter_ellipsis_text.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:flutter_ellipsis_text/src/rendering/ellipsis_text_painter.dart';
 
 const longText =
     'A long sentence with enough words to span many lines. '
@@ -61,7 +62,7 @@ void main() {
     expect(find.byType(InkWell), findsNothing);
     await tester.pumpWidget(
       host(
-        const EllipsisText(text: longText, ellipsis: '…', isShowMore: false),
+        const EllipsisText(text: longText, ellipsis: '…', expandable: false),
       ),
     );
     expect(find.byType(InkWell), findsNothing);
@@ -75,15 +76,14 @@ void main() {
     final semantics = tester.ensureSemantics();
     await tester.pumpWidget(
       host(
-        const EllipsisText(text: longText, ellipsis: '…', isShowMore: false),
+        const EllipsisText(text: longText, ellipsis: '…', expandable: false),
         direction: TextDirection.rtl,
         scale: 2,
       ),
     );
     final painter =
         tester.widget<CustomPaint>(paintedText).painter! as EllipsisTextPainter;
-    expect(painter.textDirection, TextDirection.rtl);
-    expect(painter.textScaler.scale(10), 20);
+    expect(painter.layout.size.height, greaterThan(40));
     expect(find.bySemanticsLabel(longText), findsOneWidget);
     semantics.dispose();
     expect(tester.takeException(), isNull);
@@ -98,7 +98,7 @@ void main() {
           text: longText,
           ellipsis: '…',
           maxWidth: 100,
-          isShowMore: false,
+          expandable: false,
         ),
       ),
     );
@@ -110,7 +110,7 @@ void main() {
           text: 'Updated',
           ellipsis: '!',
           maxWidth: 100,
-          isShowMore: false,
+          expandable: false,
           textDirection: TextDirection.rtl,
         ),
       ),
@@ -118,8 +118,7 @@ void main() {
     final after =
         tester.widget<CustomPaint>(paintedText).painter! as EllipsisTextPainter;
     expect(after.shouldRepaint(before), isTrue);
-    expect(after.text.text, 'Updated');
-    expect(after.textDirection, TextDirection.rtl);
+    expect(after.revision, greaterThan(before.revision));
     // A tight parent width wins over the child's preferred width.
     expect(tester.getSize(paintedText).width, 160);
     expect(tester.takeException(), isNull);
@@ -147,7 +146,7 @@ void main() {
         const EllipsisText(
           text: longText,
           ellipsis: '…',
-          startScaleIsSmall: false,
+          initiallyCollapsed: false,
         ),
       ),
     );

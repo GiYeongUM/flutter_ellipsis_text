@@ -1,6 +1,6 @@
 name: flutter_ellipsis_text
 description: Expandable Flutter text with a custom ellipsis, responsive layout, text scaling, and right-to-left support.
-version: 1.1.0
+version: 2.0.0
 homepage: https://github.com/GiYeongUM/flutter_ellipsis_text
 repository: https://github.com/GiYeongUM/flutter_ellipsis_text
 issue_tracker: https://github.com/GiYeongUM/flutter_ellipsis_text/issues
